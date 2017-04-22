@@ -12,7 +12,7 @@ import android.widget.ListView;
 public class MainActivity extends AppCompatActivity {
 
     private ListView list ;
-    private ArrayAdapter<String> adapter ;
+    private ArrayAdapter<Person> adapter ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +21,11 @@ public class MainActivity extends AppCompatActivity {
 
         list = (ListView) findViewById(R.id.listView1);
 
-        String cars[] = {"Mercedes", "Fiat", "Ferrari", "Aston Martin", "Lamborghini", "Skoda", "Volkswagen", "Audi", "Citroen"};
+        Person people[] = {new Person("A"),new Person("B"),new Person("C"),new Person("D"),new Person("E"),new Person("F")};
+        ArrayList<Person> kontakty = new ArrayList<Person>();
+        kontakty.addAll( Arrays.asList(people) );
 
-        ArrayList<String> kontakty = new ArrayList<String>();
-        kontakty.addAll( Arrays.asList(cars) );
-
-        adapter = new ArrayAdapter<String>(this, R.layout.row, kontakty);
+        adapter = new ArrayAdapter<Person>(this, R.layout.row, kontakty);
 
         list.setAdapter(adapter);
     }
