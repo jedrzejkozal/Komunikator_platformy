@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:label="@string/app_name" android:name=".AddPersonActivity"/>
+        <activity android:label="@string/app_name" android:name=".SendMessageActivity"/>
     </application>
 
 </manifest>
