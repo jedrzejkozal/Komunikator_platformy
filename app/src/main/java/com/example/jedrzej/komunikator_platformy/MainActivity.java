@@ -16,6 +16,7 @@ import android.util.Xml;
 import org.xmlpull.v1.XmlSerializer;
 import java.io.StringWriter;
 import java.util.StringTokenizer;
+import java.net.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
     EditText mEdit;
     ArrayList<String> conv_history;
     String przekazanytekst;
+    //Networking
+    DatagramSocket soc;
+    String ServerIP;
+    int port;
+    int SIZE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,18 +79,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //setting up an internet connection
+        ServerIP = "127.0.1.1";
+        port = 1030;
+        SIZE = 200;
+        try {
+            soc = new DatagramSocket(port);
+        }
+        catch(java.net.SocketException e) {}
+
         //button wyślij
         mEdit   = (EditText)findViewById(R.id.editText4);
         button_send = (Button) findViewById(R.id.button2);
         button_send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                /*Intent myIntent = new Intent(MainActivity.this, AddPersonActivity.class);
-                MainActivity.this.startActivity(myIntent);*/
                 String tmp = mEdit.getText().toString();
                 conv_history.add("Me: " + tmp);
-                //mEdit.clearComposingText();
                 mEdit.setText("");
 
+                //create XML
                 try {
                     StringTokenizer tokenizer = new StringTokenizer(przekazanytekst, " ");
                     XmlSerializer xmlSerializer = Xml.newSerializer();
@@ -108,7 +121,14 @@ public class MainActivity extends AppCompatActivity {
                     xmlSerializer.endDocument();
 
                     conv_history.add("XML: " + writer.toString());
-                } catch (Exception e) {}
+
+                //send
+                    DatagramPacket p = new DatagramPacket(new byte[SIZE], SIZE);
+                    p.setAddress(InetAddress.getByName(ServerIP));
+                    p.setPort(port);
+                    p.setData(writer.toString().getBytes());
+                    soc.send(p);
+                } catch(Exception e) {}
             }
         });
 
