@@ -1,72 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/db1_add_person"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jedrzej.komunikator_platformy.MainActivity"
-    android:orientation="vertical" >
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="181dp"
-        android:layout_height="68dp"
-        android:text="Dodaj"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="427dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nazwa"
-        tools:layout_editor_absoluteX="63dp"
-        tools:layout_editor_absoluteY="36dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="adresIP"
-        tools:layout_editor_absoluteX="63dp"
-        tools:layout_editor_absoluteY="113dp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="numer portu"
-        tools:layout_editor_absoluteX="63dp"
-        tools:layout_editor_absoluteY="194dp" />
+    android:weightSum="1">
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="wrap_content"
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        tools:layout_editor_absoluteY="25dp"
-        tools:layout_editor_absoluteX="153dp" />
+        android:hint="nazwa" />
 
     <EditText
         android:id="@+id/editText2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="101dp" />
+        android:hint="adres IP" />
 
     <EditText
         android:id="@+id/editText3"
-        android:layout_width="wrap_content"
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="180dp" />
-</android.support.constraint.ConstraintLayout>
+        android:hint="adres portu" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dodaj" />
+
+</LinearLayout>
