@@ -11,20 +11,43 @@
     <Button android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="Dodaj kontakty" />
+        android:text="Dodaj kontakty"
+        app:layout_constraintHorizontal_bias="0.502"
+        android:layout_marginBottom="447dp" />
 
     <ListView
-        android:id="@+id/listView1"
-        android:layout_width="232dp"
-        android:layout_height="365dp"
+        android:id="@+id/listView2"
+        android:layout_width="286dp"
+        android:layout_height="362dp"
+        android:layout_marginBottom="75dp"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="264dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:text=""
+        tools:layout_editor_absoluteY="447dp"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="76dp"
-        tools:layout_editor_absoluteY="73dp" />
+        android:text="Wyślij"
+        tools:layout_editor_absoluteY="447dp"
+        tools:layout_editor_absoluteX="290dp" />
+
+
 
 </android.support.constraint.ConstraintLayout>
