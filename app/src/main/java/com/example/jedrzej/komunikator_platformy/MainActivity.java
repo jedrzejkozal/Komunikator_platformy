@@ -3,6 +3,7 @@ package com.example.jedrzej.komunikator_platformy;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Arrays;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -11,10 +12,10 @@ import android.widget.ListView;
 import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView;
-import android.widget.TextView;
+import android.util.Xml;
+import org.xmlpull.v1.XmlSerializer;
+import java.io.StringWriter;
+import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public Button button_send;
     EditText mEdit;
     ArrayList<String> conv_history;
+    String przekazanytekst;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,16 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new ArrayAdapter<String>(this, R.layout.row, conv_history);
         list.setAdapter(adapter);
+
+
+        Intent i = getIntent();
+        if (i.hasExtra("dane")) {
+//
+            Bundle przekazanedane = i.getExtras();
+//
+            przekazanytekst = przekazanedane.getString("dane");
+//
+        }
 
         /*list.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -72,6 +84,31 @@ public class MainActivity extends AppCompatActivity {
                 conv_history.add("Me: " + tmp);
                 //mEdit.clearComposingText();
                 mEdit.setText("");
+
+                try {
+                    StringTokenizer tokenizer = new StringTokenizer(przekazanytekst, " ");
+                    XmlSerializer xmlSerializer = Xml.newSerializer();
+                    StringWriter writer = new StringWriter();
+                    xmlSerializer.setOutput(writer);
+
+                    xmlSerializer.startDocument("UTF-8", true);
+
+                    xmlSerializer.startTag("", "port");
+                    xmlSerializer.text(tokenizer.nextElement().toString());
+                    xmlSerializer.endTag("", "port");
+
+                    xmlSerializer.startTag("", "ip");
+                    xmlSerializer.text(tokenizer.nextElement().toString());
+                    xmlSerializer.endTag("", "ip");
+
+                    xmlSerializer.startTag("", "message");
+                    xmlSerializer.text(tmp.toString());
+                    xmlSerializer.endTag("", "message");
+
+                    xmlSerializer.endDocument();
+
+                    conv_history.add("XML: " + writer.toString());
+                } catch (Exception e) {}
             }
         });
 

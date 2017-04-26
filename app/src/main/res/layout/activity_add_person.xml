@@ -6,16 +6,6 @@
     android:weightSum="1">
 
     <EditText
-        android:id="@+id/editText"
-        style="@style/Widget.AppCompat.EditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text=""
-        android:hint="nazwa" />
-
-    <EditText
         android:id="@+id/editText2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,6 +23,15 @@
         android:inputType="textPersonName"
         android:text=""
         android:hint="adres portu" />
+
+    <TextView
+        android:id="@+id/textview"
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="Hello"/>
+
 
     <Button
         android:id="@+id/button2"
