@@ -74,19 +74,22 @@ public class MainActivity extends AppCompatActivity {
         button = (Button) findViewById(R.id.button1);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                soc.close();
                 Intent myIntent = new Intent(MainActivity.this, AddPersonActivity.class);
                 MainActivity.this.startActivity(myIntent);
             }
         });
 
         //setting up an internet connection
-        ServerIP = "127.0.1.1";
-        port = 1030;
+        ServerIP = "192.168.1.14";
+        port = 6000;
         SIZE = 200;
         try {
             soc = new DatagramSocket(port);
         }
-        catch(java.net.SocketException e) {}
+        catch(java.net.SocketException e) {
+            conv_history.add("Error: " + e);
+        }
 
         //button wyślij
         mEdit   = (EditText)findViewById(R.id.editText4);
@@ -128,9 +131,10 @@ public class MainActivity extends AppCompatActivity {
                     p.setPort(port);
                     p.setData(writer.toString().getBytes());
                     soc.send(p);
-                } catch(Exception e) {}
+                } catch(Exception e) {
+                    conv_history.add("Error click "+e);
+                }
             }
         });
-
     }
 }
