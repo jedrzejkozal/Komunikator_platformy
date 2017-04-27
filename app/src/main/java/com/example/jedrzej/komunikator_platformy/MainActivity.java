@@ -17,6 +17,9 @@ import org.xmlpull.v1.XmlSerializer;
 import java.io.StringWriter;
 import java.util.StringTokenizer;
 import java.net.*;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     String ServerIP;
     int port;
     int SIZE;
+    DatagramPacket p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +86,23 @@ public class MainActivity extends AppCompatActivity {
         button = (Button) findViewById(R.id.button3);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                conv_history.add("Dziala");
+                try {
+                    conv_history.add("Dziala");
+                    p = new DatagramPacket(new byte[SIZE], SIZE);
+
+                    soc.receive( p );
+                    String msg = new String(p.getData(), p.getOffset(), p.getLength());
+
+                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                    Document doc = dBuilder.parse(msg);
+
+                    conv_history.add("You: " + doc.getElementsByTagName("message").item(0).getTextContent().toString());
+
+                } catch (Exception e) {
+                    conv_history.add("Error odswiez "+e);
+                }
 //
 //                XMLe
 //
@@ -120,10 +141,10 @@ public class MainActivity extends AppCompatActivity {
 
                     xmlSerializer.endDocument();
 
-                    conv_history.add("XML: " + writer.toString());
+//                    conv_history.add("XML: " + writer.toString());
 
                 //send
-                    DatagramPacket p = new DatagramPacket(new byte[SIZE], SIZE);
+                    p = new DatagramPacket(new byte[SIZE], SIZE);
                     p.setAddress(InetAddress.getByName(ServerIP));
                     p.setPort(port);
                     p.setData(writer.toString().getBytes());
