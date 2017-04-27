@@ -57,18 +57,16 @@ public class MainActivity extends AppCompatActivity {
 //
         }
 
-        /*list.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
-            {
-                Intent myIntent = new Intent(MainActivity.this, SendMessageActivity.class);
-                //myIntent.putExtra("Person", position); //Optional parameters
-                myIntent.putExtra("name",adapter.getItem(position).getName());
-                myIntent.putExtra("IP",adapter.getItem(position).getIP());
-                myIntent.putExtra("port",adapter.getItem(position).getPortNumber());
-                MainActivity.this.startActivity(myIntent);
-            }
-        });*/
+        //setting up an internet connection
+        ServerIP = "192.168.1.14";
+        port = 6000;
+        SIZE = 200;
+        try {
+            soc = new DatagramSocket(port);
+        }
+        catch(java.net.SocketException e) {
+            conv_history.add("Error: " + e);
+        }
 
         //button dodaj kontakt
         button = (Button) findViewById(R.id.button1);
@@ -80,16 +78,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //setting up an internet connection
-        ServerIP = "192.168.1.14";
-        port = 6000;
-        SIZE = 200;
-        try {
-            soc = new DatagramSocket(port);
-        }
-        catch(java.net.SocketException e) {
-            conv_history.add("Error: " + e);
-        }
+        //button odśwież
+        button = (Button) findViewById(R.id.button3);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+//
+//                XMLe
+//
+            }
+        });
 
         //button wyślij
         mEdit   = (EditText)findViewById(R.id.editText4);

@@ -12,13 +12,14 @@ import org.xmlpull.v1.XmlSerializer;
 import java.io.StringWriter;
 
 import android.content.*;
-
+import java.util.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileOutputStream;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.util.Scanner;
+import java.net.*;
 
 
 
@@ -31,8 +32,36 @@ public class AddPersonActivity extends AppCompatActivity {
     public Button button;
     String Hello = "HelloWorld";
     EditText e1, e2;
-    TextView textview;
+    TextView textview, textview1;
     File plik;
+
+    //kod ze stack Overflow
+    public static String getIPAddress(boolean useIPv4) {
+        try {
+            List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface intf : interfaces) {
+                List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
+                for (InetAddress addr : addrs) {
+                    if (!addr.isLoopbackAddress()) {
+                        String sAddr = addr.getHostAddress();
+                        //boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
+                        boolean isIPv4 = sAddr.indexOf(':')<0;
+
+                        if (useIPv4) {
+                            if (isIPv4)
+                                return sAddr;
+                        } else {
+                            if (!isIPv4) {
+                                int delim = sAddr.indexOf('%'); // drop ip6 zone suffix
+                                return delim<0 ? sAddr.toUpperCase() : sAddr.substring(0, delim).toUpperCase();
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) { } // for now eat exceptions
+        return "";
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +71,25 @@ public class AddPersonActivity extends AppCompatActivity {
         e1 = (EditText) findViewById(R.id.editText3);
         e2 = (EditText) findViewById(R.id.editText2);
         textview = (TextView) findViewById(R.id.textview);
+        textview1 = (TextView) findViewById(R.id.textView1);
         plik = new File("user.xml");
+
+        /*try {
+            InetAddress IP1 = InetAddress.getLocalHost();
+            textview1.setText("Twoje IP:" + IP1.getHostAddress());
+        } catch(UnknownHostException e) {
+            //textview1.setText(e.toString());
+        }*/
+        textview1.setText("Twoje IP: " + getIPAddress(true));
+
+        /*
+        Intent i = getIntent();
+        if (i.hasExtra("port")) {
+            Bundle przekazanedane = i.getExtras();
+            String [] przekazanytekst = przekazanedane.getStringArray("dane");
+            e1.setText(przekazanytekst[0]);
+            e2.setText(przekazanytekst[1]);
+        }*/
 
         //button dodaj kontakt
         button = (Button) findViewById(R.id.button2);
