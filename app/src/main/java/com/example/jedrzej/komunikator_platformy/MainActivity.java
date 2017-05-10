@@ -88,17 +88,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 conv_history.add("Dziala");
                 try {
-                    conv_history.add("Dziala");
                     p = new DatagramPacket(new byte[SIZE], SIZE);
-
-                    soc.receive( p );
-                    String msg = new String(p.getData(), p.getOffset(), p.getLength());
-
-                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                    Document doc = dBuilder.parse(msg);
-
-                    conv_history.add("You: " + doc.getElementsByTagName("message").item(0).getTextContent().toString());
+                    p.setAddress(InetAddress.getByName(ServerIP));
+                    p.setPort(port);
+                    p.setData("ODSWIEZ".toString().getBytes());
+                    soc.send(p);
+                    conv_history.add("Dziala");
+//                    p = new DatagramPacket(new byte[SIZE], SIZE);
+//
+//                    soc.receive( p );
+//                    String msg = new String(p.getData(), p.getOffset(), p.getLength());
+//
+//                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+//                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//                    Document doc = dBuilder.parse(msg);
+//
+//                    conv_history.add("You: " + doc.getElementsByTagName("message").item(0).getTextContent().toString());
 
                 } catch (Exception e) {
                     conv_history.add("Error odswiez "+e);
